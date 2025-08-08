@@ -275,7 +275,7 @@ function startCountdown() {
     const nextClassBtn = document.getElementById('nextClassBtn');
     
     // Defina a data alvo para o contador (ex: 31 de dezembro de 2025, 23:59:59)
-    const targetDate = new Date('August 12, 2025 23:59:59').getTime();
+    const targetDate = new Date('August 07, 2025 23:59:59').getTime();
 
     const updateCountdown = setInterval(function() {
         const now = new Date().getTime();
