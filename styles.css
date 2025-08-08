@@ -1,0 +1,900 @@
+/* Reset e configurações básicas */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    padding: 1rem 0;
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    transition: transform 0.3s ease;
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+}
+
+/* Hero Section fundo inicial tela elosaude */
+.hero {
+    background: linear-gradient(#777777, #20A490 0%, #777777 100%);
+    color: white;
+    padding: 120px 0 80px;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero .container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+    background: linear-gradient(
+        90deg,
+        #ffffff 0%,
+        #ffffff 30%,
+        #e8e8e8 38%,
+        #b8b8b8 42%,
+        #ffffff 46%,
+        #f0f0f0 50%,
+        #ffffff 54%,
+        #b8b8b8 58%,
+        #e8e8e8 62%,
+        #ffffff 70%,
+        #ffffff 100%
+    );
+    background-size: 200% 100%;
+    background-position: 0 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s ease-out, silverTextShine 6s linear; /* Removido 'infinite' */
+    animation-delay: 1s, 2s; /* Início após 2 segundos */
+    position: relative;
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.2s both;
+}
+
+.hero-description {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.4s both;
+}
+
+.hero-img {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: none; /* Removendo sombra que pode causar "quadro" */
+    animation: fadeInRight 1s ease-out 0.6s both;
+    transition: transform 0.3s ease;
+    max-width: 100%;
+}
+
+.hero-img:hover {
+    transform: translateY(-10px) scale(1.02);
+}
+
+.image-content {
+    position: relative;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden; /* Garante que o conteúdo interno não crie quadros indesejados */
+   
+}
+
+.image-content:hover {
+    
+}
+
+/* Sections */
+.innovation-channel,
+.collaboration {
+    padding: 100px 0;
+    position: relative;
+}
+
+.innovation-channel {
+    background: #f8fafc;
+}
+
+.collaboration {
+    background: white;
+}
+
+.section-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+}
+
+.section-content.reverse {
+    grid-template-columns: 1fr 1fr;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    color: #1e293b;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 4px;
+    background: linear-gradient(45deg, #667eea, #764ba2);
+    border-radius: 2px;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.section-img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.section-img:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+}
+
+/* Features Grid */
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-top: 3rem;
+}
+
+.feature-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.feature-card h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #1e293b;
+}
+
+.feature-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+/* Benefits List */
+.benefits-list {
+    margin-top: 2rem;
+}
+
+.benefit-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.benefit-icon {
+    background: linear-gradient(45deg, #20a490, #7d7776);
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+/* Call to Action  area do botão no fim da pagina*/
+.cta {
+    background: linear-gradient(135deg, #44484c 15%, #7d7776 100%);
+    color: white;
+    padding: 100px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.cta::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+}
+
+.cta-content {
+    position: relative;
+    z-index: 2;
+}
+
+.cta-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+}
+
+.cta-description {
+    font-size: 1.2rem;
+    margin-bottom: 2.5rem;
+    opacity: 0.9;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-button {
+    /*background: linear-gradient(0deg, #20a490, #7d7776);*/
+    background-color: #20a490;
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-cta {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-cta:hover {
+    background-color: #0056b3;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+    background: linear-gradient(45deg, #5a67d8, #6b46c1);
+}
+
+.cta-button:active {
+    transform: translateY(-1px);
+}
+
+/* Footer */
+.footer {
+    background: #0f172a;
+    color: white;
+    padding: 60px 0;
+    text-align: center;
+}
+
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.footer-logo-img {
+    height: 60px;
+    width: auto;
+    filter: brightness(0) invert(1);
+    opacity: 0.8;
+}
+
+.footer-text {
+    opacity: 0.7;
+    font-size: 1rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes silverTextShine {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+/* Scroll Animations */
+.section-content {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.section-content.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .hero .container,
+    .section-content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        text-align: center;
+    }
+    
+    .section-content.reverse {
+        grid-template-columns: 1fr;
+    }
+    
+    .section-content.reverse .image-content {
+        order: -1;
+    }
+    
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .cta-title {
+        font-size: 2rem;
+    }
+    
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .container {
+        padding: 0 15px;
+    }
+    
+    .hero {
+        padding: 100px 0 60px;
+        min-height: auto;
+    }
+    
+    .innovation-channel,
+    .collaboration {
+        padding: 60px 0;
+    }
+    
+    .cta {
+        padding: 60px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .cta-title {
+        font-size: 1.8rem;
+    }
+    
+    .feature-card {
+        padding: 1.5rem;
+    }
+    
+    .cta-button {
+        padding: 15px 30px;
+        font-size: 1rem;
+    }
+}
+/* --- CÓDIGO DO BOTÃO DE CONTROLE DE SOM --- */
+
+/* Ajusta o container do vídeo para permitir o posicionamento do botão */
+.image-content {
+    position: relative;
+}
+
+/* Estilo do botão */
+#btn-mute {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    transition: background-color 0.2s;
+    z-index: 10; /* Garante que o botão fique na frente */
+}
+
+#btn-mute:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+/* Estilo para os ícones SVG dentro do botão */
+#btn-mute svg {
+    width: 24px;
+    height: 24px;
+    fill: white;
+}
+
+/* Esconde o ícone de 'som ligado' por padrão */
+.icon-unmuted {
+    display: none;
+}
+
+/* traeinamento */
+/* Correção para a Seção de Treinamento */
+.training-section-corrected {
+    background: linear-gradient(135deg, #f0f0f0 0%, #c0c0c0 40%, #ffffff 50%, #c0c0c0 60%, #a0a0a0 100%);
+    padding: 100px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.training-page-container {
+    background: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    text-align: center;
+    margin: 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 768px) {
+    .training-section-corrected {
+        padding: 60px 0;
+        min-height: auto;
+    }
+}
+
+.training-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #1e293b;
+}
+
+.training-subtitle {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #20a490;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+}
+
+.training-description {
+    font-size: 1.1rem;
+    color: #64748b;
+    margin-bottom: 2rem;
+    line-height: 1.8;
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.training-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    
+}
+
+@media (max-width: 768px) {
+    .training-page-container {
+        padding: 20px;
+    }
+
+    .training-title {
+        font-size: 2rem;
+    }
+
+    .training-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .training-description {
+        font-size: 1rem;
+    }
+}
+
+
+
+/* Seção de Setores Internos */
+.internal-sectors {
+    background: #f8f9fa;
+    padding: 80px 0;
+}
+
+.internal-sectors .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.internal-sectors .section-description {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+}
+
+.sectors-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.sector-card {
+    background: white;
+    border-radius: 15px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.sector-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #20A490;
+}
+
+.sector-image {
+    margin-bottom: 1.5rem;
+}
+
+.puzzle-img {
+    width: 240px;
+    height: 240px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.sector-card:hover .puzzle-img {
+    transform: scale(1.1);
+}
+
+.sector-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 1rem;
+}
+
+.sector-description {
+    color: #666;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* Responsividade para a seção de setores */
+@media (max-width: 768px) {
+    .internal-sectors .section-title {
+        font-size: 2rem;
+    }
+    
+    .sectors-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .sector-card {
+        padding: 1.5rem;
+    }
+    
+    .puzzle-img {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+
+
+/* Estilos para o contador de tempo */
+.countdown-container {
+    margin-top: 20px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.countdown-label {
+    font-size: 1.1rem;
+    color: #f0f0f0;
+    margin-bottom: 10px;
+}
+
+.countdown-timer {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #20A490;
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 10px;
+    display: inline-block;
+    min-width: 250px;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+@media (max-width: 768px) {
+    .countdown-timer {
+        font-size: 1.8rem;
+        min-width: 200px;
+    }
+}
+
+
+
+
+/* Modal de Tempo Esgotado */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.modal-content {
+    background: white;
+    border-radius: 20px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #44484c 15%, #7d7776 100%);
+    color: white;
+    padding: 30px;
+    text-align: center;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.modal-body {
+    padding: 30px;
+    text-align: center;
+}
+
+.modal-body p {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.modal-footer {
+    padding: 0 30px 30px;
+    text-align: center;
+}
+
+.modal-button {
+    background: #20a490;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(32, 164, 144, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.modal-button:hover {
+    background: #1a8a7a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(32, 164, 144, 0.4);
+}
+
+.modal-button:active {
+    transform: translateY(0);
+}
+
+/* Animação do modal */
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-50px) scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Botão desabilitado */
+.cta-button:disabled {
+    background: #cccccc;
+    color: #666666;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.cta-button:disabled:hover {
+    background: #cccccc;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Responsividade do modal */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 20px;
+    }
+    
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .modal-body p {
+        font-size: 1rem;
+    }
+    
+    .modal-button {
+        padding: 12px 25px;
+        font-size: 0.9rem;
+    }
+}
+
