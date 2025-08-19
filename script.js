@@ -1,371 +1,222 @@
 document.addEventListener('DOMContentLoaded', function () {
-    // Animação de scroll para seções
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function (entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, observerOptions);
-
-    const sections = document.querySelectorAll('.section-content');
-    sections.forEach(section => {
-        observer.observe(section);
-    });
-
-    // Parallax suave para o hero
-    window.addEventListener('scroll', function () {
-        const scrolled = window.pageYOffset;
-        const hero = document.querySelector('.hero');
-        const heroImg = document.querySelector('.hero-img');
-
-        if (hero && heroImg) {
-            const rate = scrolled * -0.5;
-            heroImg.style.transform = `translateY(${rate}px)`;
-        }
-    });
-
-    // Animação dos cards de features
-    const featureCards = document.querySelectorAll('.feature-card');
-    featureCards.forEach((card, index) => {
-        card.style.animationDelay = `${index * 0.1}s`;
-        card.classList.add('fade-in-up');
-    });
-
-    // Smooth scroll para links internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Botão do Calendly (popup modal)
-    const scheduleBtn = document.getElementById('scheduleButton');
-    if (scheduleBtn) {
-        scheduleBtn.addEventListener('click', function () {
-            if (window.Calendly) {
-                Calendly.initPopupWidget({
-                    url: 'https://calendly.com/victorelosaude/30min'
-                });
-            } else {
-                console.error('Calendly widget não foi carregado. Verifique se o script widget.js está incluído.');
-                alert('Erro ao carregar o agendamento. Por favor, tente novamente mais tarde ou entre em contato diretamente.');
-            }
-        });
-    }
-
-    // Redimensionamento fluido do vídeo no hero (qualquer borda ou canto)
-    const imageContent = document.querySelector('.hero .image-content');
-    let isResizing = false;
-    let startX, startY, startWidth, startHeight;
-
-    if (imageContent) {
-        imageContent.addEventListener('mousedown', function (e) {
-            isResizing = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            startWidth = imageContent.offsetWidth;
-            startHeight = imageContent.offsetHeight;
-            e.preventDefault();
-        });
-
-        document.addEventListener('mousemove', function (e) {
-            if (isResizing) {
-                const dx = e.clientX - startX;
-                const dy = e.clientY - startY;
-                const newWidth = startWidth + dx;
-                const newHeight = startHeight + dy;
-                const maxWidth = window.innerWidth - imageContent.getBoundingClientRect().left - 20;
-                const maxHeight = window.innerHeight - imageContent.getBoundingClientRect().top - 20;
-
-                imageContent.style.width = `${Math.max(50, Math.min(newWidth, maxWidth))}px`;
-                imageContent.style.height = `${Math.max(50, Math.min(newHeight, maxHeight))}px`;
-                imageContent.style.flexBasis = `${Math.max(50, Math.min(newWidth, maxWidth))}px`;
-            }
-        });
-
-        document.addEventListener('mouseup', function () {
-            isResizing = false;
-        });
-
-        imageContent.addEventListener('selectstart', function (e) {
-            if (isResizing) e.preventDefault();
-        });
-    }
-
-    // ===================================================================
-    //  INÍCIO DA LÓGICA DO BOTÃO DE CONTROLE DE SOM DO VÍDEO
-    // ===================================================================
-    const video = document.getElementById('hero-video');
-    const muteBtn = document.getElementById('btn-mute');
-
-    // Verifica se os elementos do vídeo e do botão realmente existem na página
-    if (video && muteBtn) {
-        const iconMuted = muteBtn.querySelector('.icon-muted');
-        const iconUnmuted = muteBtn.querySelector('.icon-unmuted');
-
-        muteBtn.addEventListener('click', (event) => {
-            // Impede que o clique no botão ative o evento de 'arrastar' do container pai
-            event.stopPropagation(); 
-            
-            if (video.muted) {
-                video.muted = false;
-                iconMuted.style.display = 'none';
-                iconUnmuted.style.display = 'block';
-            } else {
-                video.muted = true;
-                iconMuted.style.display = 'block';
-                iconUnmuted.style.display = 'none';
-            }
-        });
-    }
-    // ===================================================================
-    //  FIM DA LÓGICA DO BOTÃO
-    // ===================================================================
-
-    // Controle da animação silverTextShine com intervalo de 2 minutos
-    const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
-        function startSilverTextShine() {
-            heroTitle.style.animation = 'none'; // Reseta a animação
-            heroTitle.offsetHeight; // Força reflow
-            heroTitle.style.animation = 'fadeInUp 1s ease-out, silverTextShine 6s linear';
-        }
-
-        // Inicia a animação após 2 segundos
-        setTimeout(startSilverTextShine, 2000);
-
-        // Repete a animação a cada 2 minutos (120000 ms) após o primeiro início
-        setInterval(() => {
-            startSilverTextShine();
-        }, 120000);
-    }
-});
-
-// --- Funções Globais (fora do DOMContentLoaded) ---
-
-// Função para o botão de contato
-function openContact() {
-    alert('Entre em contato conosco através dos canais internos da instituição ou envie um e-mail para nossa equipe de inovação!');
-}
-
-// Efeito de typing para o título (opcional)
-function typeWriter(element, text, speed = 100) {
-    let i = 0;
-    element.innerHTML = '';
-
-    function type() {
-        if (i < text.length) {
-            element.innerHTML += text.charAt(i);
-            i++;
-            setTimeout(type, speed);
-        }
-    }
-    type();
-}
-
-// Adicionar classe de animação CSS
-const style = document.createElement('style');
-style.textContent = `
-    .fade-in-up {
-        opacity: 0;
-        transform: translateY(30px);
-        animation: fadeInUp 0.8s ease forwards;
-    }
-
-    @keyframes fadeInUp {
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-`;
-document.head.appendChild(style);
-
-// Efeito de hover nos cards
-document.querySelectorAll('.feature-card').forEach(card => {
-    card.addEventListener('mouseenter', function () {
-        this.style.transform = 'translateY(-10px) scale(1.02)';
-    });
-    card.addEventListener('mouseleave', function () {
-        this.style.transform = 'translateY(0) scale(1)';
-    });
-});
-
-// Loading animation
-window.addEventListener('load', function () {
-    document.body.classList.add('loaded');
-});
-
-// Efeito de partículas no background (opcional)
-function createParticles() {
-    const hero = document.querySelector('.hero');
-    if (!hero) return;
-
-    for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.cssText = `
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            left: ${Math.random() * 100}%;
-            top: ${Math.random() * 100}%;
-            animation: float ${3 + Math.random() * 4}s ease-in-out infinite;
-            animation-delay: ${Math.random() * 2}s;
-        `;
-        hero.appendChild(particle);
-    }
-}
-
-const particleStyle = document.createElement('style');
-particleStyle.textContent = `
-    @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-20px) rotate(180deg); }
-    }
-`;
-document.head.appendChild(particleStyle);
-
-createParticles();
-
-// ===================================================================
-// VARIÁVEL GLOBAL PARA CONTROLAR O ESTADO DO COUNTDOWN
-// ===================================================================
-let countdownExpired = false;
-
-// ===================================================================
-// FUNÇÃO MODIFICADA PARA ABRIR O GOOGLE FORMS OU O MODAL
-// ===================================================================
-function openGoogleForm() {
-    // Verifica se o countdown expirou
-    if (countdownExpired) {
-        // Se expirou, abre o modal
-        const modal = document.getElementById('timeExpiredModal');
-        if (modal) {
-            modal.style.display = 'flex';
-        }
-    } else {
-        // Se ainda está ativo, abre o Google Forms
-        window.open('https://docs.google.com/forms/d/e/1FAIpQLSfbmuLVr-EKEyQzf6hNMQ_Uc0qFrnGmvDBjPB-zvgDMuVI7NQ/viewform', '_blank');
-    }
-}
-
-// ===================================================================
-// LÓGICA MODIFICADA DO CONTADOR DE TEMPO
-// ===================================================================
-function startCountdown() {
+    // === LÓGICA DE VAGAS E CRONÔMETRO ===
+    const ctaButton = document.getElementById('inscrever-btn');
+    const vagasCountElement = document.getElementById('vagas-count');
+    const vagasTextElement = document.getElementById('vagas-disponiveis-text');
     const countdownElement = document.getElementById('countdown');
-    const ctaButton = document.querySelector('.cta-button');
-    const modal = document.getElementById('timeExpiredModal');
+    const inscricaoModal = document.getElementById('inscricaoModal');
+    const inscricaoForm = document.getElementById('inscricaoForm');
+    const timeExpiredModal = document.getElementById('timeExpiredModal');
     const nextClassBtn = document.getElementById('nextClassBtn');
-    
-    // Defina a data alvo para o contador (ex: 31 de dezembro de 2025, 23:59:59)
-    const targetDate = new Date('August 10, 2025 23:59:59').getTime();
+    const cancelarBtn = document.getElementById('cancelarBtn');
 
-    const updateCountdown = setInterval(function() {
-        const now = new Date().getTime();
-        const distance = targetDate - now;
+    let vagasDisponiveis = null;
+    let tempoRestante = null;
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-        if (countdownElement) {
-            countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    // Função para buscar o número de vagas no backend
+    async function fetchVagas() {
+        console.log("Tentando buscar o número de vagas...");
+        try {
+            const response = await fetch('/vagas.json');
+            if (!response.ok) {
+                console.error("Erro na resposta da rede:", response.status, response.statusText);
+                throw new Error('Falha ao buscar as vagas.');
+            }
+            const data = await response.json();
+            vagasDisponiveis = data.vagas_disponiveis;
+            console.log("Vagas disponíveis obtidas:", vagasDisponiveis);
+            updateUI();
+        } catch (error) {
+            console.error('Erro ao buscar as vagas:', error);
+            if (vagasTextElement) {
+                vagasTextElement.innerHTML = 'Vagas para a próxima turma: <span style="color: red;">Erro ao carregar as vagas. Tente novamente mais tarde.</span>';
+            }
+            if (ctaButton) {
+                ctaButton.textContent = 'Erro ao Carregar';
+                ctaButton.disabled = true;
+            }
         }
+    }
 
-        if (distance < 0) {
-            clearInterval(updateCountdown);
+    // Lógica do cronômetro
+    function startCountdown() {
+        console.log("Iniciando cronômetro...");
+        const targetDate = new Date('August 22, 2025 23:59:59').getTime(); // Altere esta data
+        const updateCountdown = setInterval(function () {
+            const now = new Date().getTime();
+            tempoRestante = targetDate - now;
 
-            // ===================================================================
-            // MARCA QUE O COUNTDOWN EXPIROU
-            // ===================================================================
-            countdownExpired = true;
+            const days = Math.floor(tempoRestante / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((tempoRestante % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((tempoRestante % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((tempoRestante % (1000 * 60)) / 1000);
 
             if (countdownElement) {
-                countdownElement.innerHTML = "Inscrições encerradas!";
+                countdownElement.innerHTML = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            }
+
+            if (tempoRestante < 0) {
+                clearInterval(updateCountdown);
+                tempoRestante = 0;
+                console.log("Tempo esgotado.");
+                updateUI();
+            }
+        }, 1000);
+    }
+
+    // Função central que decide o estado da interface
+    function updateUI() {
+        console.log("Atualizando a UI. Vagas:", vagasDisponiveis, " | Tempo Restante:", tempoRestante);
+        
+        // Se ainda não temos a informação das vagas, não faz nada
+        if (vagasDisponiveis === null) return;
+
+        const canInscrever = vagasDisponiveis > 0 && (tempoRestante === null || tempoRestante > 0);
+
+        if (canInscrever) {
+            // Inscrições abertas: mostra a contagem de vagas e o botão
+            if (vagasTextElement) {
+                vagasTextElement.innerHTML = `Vagas para a próxima turma: <span id="vagas-count">${vagasDisponiveis}</span>`;
+                vagasTextElement.classList.add('vagas-yellow');
+                vagasTextElement.classList.remove('vagas-red');
+            }
+            if (ctaButton) {
+                ctaButton.textContent = "Fazer parte da próxima turma";
+                ctaButton.disabled = false;
+                ctaButton.style.display = 'block';
+            }
+            if (countdownElement) {
+                countdownElement.parentNode.style.display = 'block';
+            }
+        } else {
+            // Inscrições fechadas (por vagas ou tempo)
+            if (vagasDisponiveis === 0) {
+                if (vagasTextElement) {
+                    vagasTextElement.innerHTML = 'Todas as vagas foram preenchidas. Em breve, lançaremos uma nova turma.';
+                    vagasTextElement.classList.add('vagas-red');
+                    vagasTextElement.classList.remove('vagas-yellow');
+                }
+                console.log("Inscrições encerradas: Vagas esgotadas.");
+            } else if (tempoRestante <= 0) {
+                if (countdownElement) {
+                    countdownElement.innerHTML = "Inscrições encerradas!";
+                }
+                console.log("Inscrições encerradas: Tempo esgotado.");
             }
 
             if (ctaButton) {
                 ctaButton.textContent = "Inscrições Encerradas";
-                // NOTA: O botão mantém a mesma função onclick="openGoogleForm()"
-                // mas agora a função openGoogleForm() verifica o estado do countdown
+                ctaButton.disabled = true;
+            }
+            if (countdownElement) {
+                countdownElement.parentNode.style.display = 'block';
             }
         }
-    }, 1000);
-    
-    // Adicionar evento ao botão do modal
-    if (nextClassBtn) {
-        nextClassBtn.addEventListener('click', function() {
-            // Aqui você pode adicionar o embed do forms ou redirecionar
-            // Por enquanto, vamos fechar o modal e mostrar uma mensagem
-            if (modal) {
-                modal.style.display = 'none';
-            }
-            
-            // Placeholder para o embed do forms - você pode substituir por:
-            // window.open('URL_DO_FORMS', '_blank');
-            // ou adicionar o embed diretamente
-            alert('Em breve você receberá informações sobre a próxima turma!');
-            
-            // Exemplo de como você poderia abrir um forms:
-            // window.open('https://docs.google.com/forms/d/e/SEU_FORM_ID/viewform', '_blank');
-        });
     }
-    
-    // Fechar modal clicando fora dele
-    if (modal) {
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-    }
-}
 
-// Iniciar o contador quando o DOM estiver carregado
-document.addEventListener('DOMContentLoaded', startCountdown);
-
-// ===================================================================
-// FUNÇÃO PARA TESTAR O MODAL (SIMULAR TEMPO ESGOTADO)
-// ===================================================================
-function testTimeExpired() {
-    const countdownElement = document.getElementById('countdown');
-    const ctaButton = document.querySelector('.cta-button');
-    
-    // Marca que o countdown expirou
-    countdownExpired = true;
-    
-    // Simular tempo esgotado
-    if (countdownElement) {
-        countdownElement.innerHTML = "Inscrições encerradas!";
-    }
-    
-    // Atualizar o texto do botão
+    // Lógica para abrir o modal
     if (ctaButton) {
-        ctaButton.textContent = "Inscrições Encerradas";
+        ctaButton.addEventListener('click', () => {
+            if (vagasDisponiveis > 0 && (tempoRestante === null || tempoRestante > 0)) {
+                console.log("Botão clicado. Abrindo modal de inscrição.");
+                if (inscricaoModal) {
+                    inscricaoModal.style.display = 'flex';
+                }
+            } else {
+                console.log("Botão clicado. Inscrições fechadas. Abrindo modal de tempo esgotado.");
+                if (timeExpiredModal) {
+                    timeExpiredModal.style.display = 'flex';
+                }
+            }
+        });
     }
     
-    // Agora quando clicar no botão, ele abrirá o modal automaticamente
-    // porque a função openGoogleForm() verifica o estado countdownExpired
-}
+    // Lógica para fechar o modal ao clicar fora
+    if (inscricaoModal) {
+        inscricaoModal.addEventListener('click', (e) => {
+            if (e.target === inscricaoModal) {
+                inscricaoModal.style.display = 'none';
+                console.log("Modal de inscrição fechado.");
+            }
+        });
+    }
 
-// Para testar, você pode chamar testTimeExpired() no console do navegador
-// ou adicionar um botão temporário para teste
+    // Lógica para fechar o modal de tempo esgotado ao clicar fora
+    if (timeExpiredModal) {
+        timeExpiredModal.addEventListener('click', (e) => {
+            if (e.target === timeExpiredModal) {
+                timeExpiredModal.style.display = 'none';
+                console.log("Modal de tempo esgotado fechado.");
+            }
+        });
+    }
 
+    // Lógica para o botão "Quero participar da próxima turma"
+    if (nextClassBtn) {
+        nextClassBtn.addEventListener('click', () => {
+            if (timeExpiredModal) {
+                timeExpiredModal.style.display = 'none';
+            }
+            console.log("Botão 'Próxima Turma' clicado.");
+            // Você pode adicionar um link para um formulário de lista de espera aqui
+            alert('Em breve você receberá informações sobre a próxima turma!');
+        });
+    }
+
+     if (cancelarBtn) {
+        cancelarBtn.addEventListener('click', function() {
+            if (inscricaoModal) {
+                inscricaoModal.style.display = 'none';
+                console.log("Modal de inscrição fechado pelo botão Cancelar.");
+            }
+        });
+    }
+    
+    // Lógica para envio do formulário
+    if (inscricaoForm) {
+        inscricaoForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            console.log("1. Formulário de inscrição submetido. Coletando dados...");
+
+            const formData = {
+                nome: document.getElementById('nome').value,
+                setor: document.getElementById('setor').value,
+                email: document.getElementById('email').value
+            };
+            
+            console.log("2. Dados do formulário coletados:", formData);
+            try {
+                console.log("3. Tentando enviar os dados para o servidor no endereço '/inscrever'...");
+                const response = await fetch('/inscrever', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                console.log("4. Resposta do servidor recebida:", response.status, response.statusText);
+
+                if (!response.ok) {
+                    console.error("Erro na resposta do backend:", response.status, response.statusText);
+                    throw new Error('Falha na inscrição. Tente novamente.');
+                }
+                
+                
+                alert('Sua inscrição foi confirmada!');
+                inscricaoModal.style.display = 'none';
+                inscricaoForm.reset();
+                console.log("Inscrição bem-sucedida. Buscando vagas novamente...");
+                fetchVagas(); // Atualiza a contagem de vagas
+            } catch (error) {
+                console.error('Erro de inscrição:', error);
+                alert('Houve um erro ao processar sua inscrição. Por favor, tente novamente mais tarde.');
+            }
+        });
+    }
+
+    // Inicia a verificação de vagas e tempo
+    fetchVagas();
+    startCountdown();
+
+});
