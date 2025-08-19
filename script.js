@@ -8,7 +8,13 @@ document.addEventListener('DOMContentLoaded', function () {
     const inscricaoForm = document.getElementById('inscricaoForm');
     const timeExpiredModal = document.getElementById('timeExpiredModal');
     const nextClassBtn = document.getElementById('nextClassBtn');
+<<<<<<< HEAD
     const cancelarBtn = document.getElementById('cancelarBtn');
+=======
+    
+    // Defina a data alvo para o contador (ex: 31 de dezembro de 2025, 23:59:59)
+    const targetDate = new Date('August 25, 2025 23:59:59').getTime();
+>>>>>>> 96df202f0c9caec37086e494ce66a859e662ae89
 
     let vagasDisponiveis = null;
     let tempoRestante = null;
