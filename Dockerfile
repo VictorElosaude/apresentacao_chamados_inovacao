@@ -29,7 +29,7 @@ FROM nginx:alpine
 COPY --from=builder /app/dist /usr/share/nginx/html
 
 # Expose port 80 to the outside world
-EXPOSE 80
+EXPOSE 3000
 
 # This command starts the Nginx server in the foreground
 CMD ["nginx", "-g", "daemon off;"]
