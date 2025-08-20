@@ -1,9 +1,0 @@
-{
-  "build": {
-    "builder": "docker"
-  },
-  "deployment": {
-    "startCommand": "node server.js",
-    "port": 3000
-  }
-}

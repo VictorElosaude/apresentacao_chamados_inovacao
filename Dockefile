@@ -1,0 +1,24 @@
+# Usa uma imagem oficial do Node.js como base.
+# A versão 18-alpine é leve e otimizada.
+FROM node:18-alpine
+
+# Define o diretório de trabalho dentro do contêiner.
+WORKDIR /usr/src/app
+
+# Copia os arquivos de configuração do projeto.
+# Isso permite que o Docker use o cache para npm install se package.json não mudar.
+COPY package*.json ./
+
+# Instala as dependências do projeto.
+RUN npm install
+
+# Copia todos os arquivos do seu projeto para o diretório de trabalho no contêiner.
+COPY . .
+
+# Expõe a porta que a aplicação irá usar.
+# Isso deve corresponder à porta que você configurou em server.js.
+EXPOSE 3000
+
+# Define o comando que será executado quando o contêiner for iniciado.
+# Este comando inicia a sua aplicação Node.js.
+CMD [ "node", "server.js" ]
