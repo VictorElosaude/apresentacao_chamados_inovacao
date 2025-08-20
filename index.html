@@ -117,7 +117,7 @@
         </video>
     </div>
 </div>
-<script src="training.js"></script>
+<!--<script src="training.js"></script>-->
 </section>
 
     <section class="internal-sectors">
@@ -142,13 +142,7 @@
                     </div>
                     <h3 class="sector-title">Financeiro</h3>
                     <p class="sector-description">
-                        Na área Administrativo-Financeira, nossa atuação vai além dos números.
-Somos quem garante que cada estrutura, cada recurso e cada processo esteja
-no lugar certo, na hora certa — para que todos possam focar no que realmente
-importa: cuidar das pessoas.
-Com responsabilidade, agilidade e visão estratégica, transformamos rotinas em
-soluções, e desafios em oportunidades. Porque quando o bastidor funciona
-bem, o espetáculo acontece com excelência.
+                        No Administrativo-Financeiro garantimos recursos e processos no lugar certo, com agilidade e estratégia para transformar desafios em soluções.
                     </p>
                 </div>
             </div>
@@ -181,11 +175,15 @@ bem, o espetáculo acontece com excelência.
                 <p class="cta-description">
                     Gostou? Traga pra gente a sua necessidade e vamos juntos desenvolver soluções eficientes!
                 </p>
+                <p id="vagas-disponiveis-text">Vagas para a próxima turma: <span id="vagas-count"></span></p>
+                
                 <div class="countdown-container">
                     <p class="countdown-label">Tempo restante para a inscrição</p>
                     <div id="countdown" class="countdown-timer"></div>
                 </div>
-                <button class="cta-button" onclick="openGoogleForm()">Fazer parte da próxima turma</button>
+                <button id="inscrever-btn" class="cta-button">Fazer parte da próxima turma</button>
+                    <br><br>
+                <p class="data-treinamento">Data: 28/08/2025 as 14:00h</p>
             </div>
         </div>
     </section>
@@ -195,12 +193,11 @@ bem, o espetáculo acontece com excelência.
             <div class="footer-content">
                 <img src="elosaude_semFundo.png" alt="Elosaúde Logo" class="footer-logo-img">
                 <p class="footer-text">Fomentando a cultura data-driven na nossa instituição</p>
-				<img src="ANS.png" alt="ANS Logo" class="logo-img">
+                <img src="ANS.png" alt="ANS Logo" class="logo-img">
             </div>
         </div>
     </footer>
 
-    <!-- Modal de Tempo Esgotado -->
     <div id="timeExpiredModal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
             <div class="modal-header">
@@ -211,6 +208,49 @@ bem, o espetáculo acontece com excelência.
             </div>
             <div class="modal-footer">
                 <button id="nextClassBtn" class="modal-button">Quero participar da próxima turma</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="inscricaoModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content-new">
+            <div class="modal-logo-container">
+                <img src="elosaudebranco.png" alt="Logo Elosaúde" class="modal-logo-img">
+            </div>
+            <div class="modal-form-content">
+                <h2 class="modal-title-new">Inscrição para a Próxima Turma</h2>
+                <p class="modal-description-new">Preencha os dados abaixo para garantir sua vaga.</p>
+                <form id="inscricaoForm" class="inscricao-form-new">
+                    <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+                    <select id="setor" name="setor" required>
+                        <option value="" disabled selected>Selecione seu setor</option>
+                        <option value="inovacao">Inovação</option>
+                        <option value="cadastro">Cadastro</option>
+                        <option value="credenciamento">Credenciamento</option>
+                        <option value="rh">RH</option>
+                        <option value="asjg">ASJG</option>
+                        <option value="superintendencia">Superintendência</option>
+                        <option value="financeiro">Financeiro</option>
+                        <option value="administrativo">Administrativo</option>
+                        <option value="contas_medicas">Contas Médicas</option>
+                        <option value="autorizacao_medica">Autorização Médica</option>
+                        <option value="autorizacao_odontologica">Autorização Odontológica</option>
+                        <option value="max_care">Max Care</option>
+                        <option value="atendimento">Atendimento</option>
+                        <option value="csb">CSB</option>
+                    </select>
+                    <input type="email" id="email" name="email" placeholder="Seu e-mail corporativo" required>
+                    <textarea id="assunto" name="assunto" placeholder="Qual assunto você gostaria que fosse abordado no treinamento?" rows="3" required></textarea>
+                    
+                    <div class="button-container-new">
+                        <button type="button" id="cancelarBtn" class="modal-button-cancel">Cancelar</button>
+                        <button type="submit" class="modal-button">Confirmar Inscrição</button>
+                    </div>
+                </form>
+                
+                <div id="confirmacao" class="confirmacao-message" style="display: none;">
+                    ✅ Inscrição realizada com sucesso!
+                </div>
             </div>
         </div>
     </div>
