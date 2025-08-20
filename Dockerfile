@@ -1,35 +1,35 @@
 # Stage 1: Build the application
-# Use a lightweight Node.js image to install dependencies and build the project.
-FROM node:18-alpine AS builder
+# Usa uma imagem Node.js para instalar as dependências e construir o projeto.
+FROM node:20-alpine AS builder
 
-# Set the working directory inside the container
+# Define o diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory.
-# This step is cached, so Docker doesn't need to reinstall dependencies
-# unless these files change.
+# Copia os arquivos de configuração do Node.js
+# para que o Docker possa usar o cache.
 COPY package*.json ./
 
-# Install project dependencies
-RUN npm install
+# Instala todas as dependências do projeto. O 'ci' garante uma instalação limpa.
+RUN npm ci
 
-# Copy all other project files into the container
+# Copia todos os outros arquivos do projeto para o container.
 COPY . .
 
-# Run the build script defined in your package.json
+# Roda o script de 'build' do seu projeto.
+# Este comando gera os arquivos estáticos (HTML, CSS, JS) para o seu site.
 RUN npm run build
 
 # Stage 2: Serve the static files
-# Use a super lightweight Nginx image to serve the static files from the build step.
+# Usa uma imagem Nginx super leve para servir os arquivos estáticos.
 FROM nginx:alpine
 
-# Copy the built files from the 'builder' stage into the Nginx public directory
-# The 'dist' folder is a common output directory for front-end build tools (like Vite, Webpack, etc.).
-# If your build output directory is different (e.g., 'build', 'public'), change this path.
+# Copia os arquivos gerados na etapa de 'builder' para a pasta pública do Nginx.
+# CRÍTICO: Se a pasta de saída do seu 'build' não for 'dist',
+# você DEVE alterar o caminho '/app/dist' para o caminho correto.
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Expose port 80 to the outside world
-EXPOSE 3000
+# A porta 80 é a porta padrão para o tráfego da web HTTP.
+EXPOSE 80
 
-# This command starts the Nginx server in the foreground
+# Este comando inicia o servidor Nginx em primeiro plano.
 CMD ["nginx", "-g", "daemon off;"]
