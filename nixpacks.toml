@@ -1,2 +1,8 @@
-[nixpacks]
-build = "docker"
+[phases.setup]
+nixPkgs = ["nodejs", "npm"]
+
+[phases.build]
+cmds = ["npm install", "npm run build"]
+
+[phases.start]
+cmds = ["npm run start"]
