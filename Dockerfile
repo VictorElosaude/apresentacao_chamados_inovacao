@@ -2,24 +2,23 @@
 # Usa uma imagem Node.js para construir e executar a aplicação.
 FROM node:20-alpine
 
-# Define o diretório de trabalho dentro do container
+# Define o diretório de trabalho principal dentro do container
 WORKDIR /app
 
-# Copia os arquivos de configuração do Node.js da subpasta 'elosaude-backend'
-# para que o Docker possa usar o cache.
-COPY elosaude-backend/package*.json ./
+# Copia todo o conteúdo do seu projeto (incluindo a raiz) para o container.
+# Isso garante que 'index.html', 'vagas.json' e outros arquivos
+# sejam copiados corretamente.
+COPY . .
+
+# Altera o diretório de trabalho para a sua subpasta 'elosaude-backend',
+# onde o arquivo 'package.json' e o 'server.js' estão.
+WORKDIR /app/elosaude-backend
 
 # Instala todas as dependências do projeto. 
 # Usa 'npm install' para ser mais resiliente.
 RUN npm install
 
-# Copia todos os outros arquivos da subpasta 'elosaude-backend' para o container.
-# O ponto '.' final significa que todo o conteúdo da pasta de origem
-# (elosaude-backend) será copiado para o diretório de trabalho atual do container (/app).
-COPY elosaude-backend/. .
-
 # Expõe a porta que a sua aplicação irá usar.
-# A porta 3000 é comum para aplicações Node.js.
 EXPOSE 3000
 
 # Este comando inicia a sua aplicação Node.js.
