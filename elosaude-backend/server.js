@@ -33,6 +33,7 @@ app.get('/', (req, res) => {
 // FIM: Adição de código para servir a página inicial
 
 
+
 // Rota para manipular a inscrição
 app.post('/inscrever', async (req, res) => {
     const { nome, setor, assunto } = req.body;
