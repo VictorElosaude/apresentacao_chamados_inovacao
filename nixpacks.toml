@@ -1,0 +1,2 @@
+[nixpacks]
+build = "docker"
