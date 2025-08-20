@@ -1,17 +1,6 @@
 {
-  "vagas_disponiveis": 7,
+  "vagas_disponiveis": 9,
   "inscricoes": [
-    {
-      "nome": "VICTOR VARGAS VIANA",
-      "setor": "autorizacao_odontologica",
-      "assunto": "ss",
-      "data_inscricao": "2025-08-20T00:59:37.064Z"
-    },
-    {
-      "nome": "Luciana Maria Borges Leite",
-      "setor": "max_care",
-      "assunto": "ddf",
-      "data_inscricao": "2025-08-20T01:10:38.585Z"
-    }
+
   ]
 }
