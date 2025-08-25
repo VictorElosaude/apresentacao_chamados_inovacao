@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Lógica do cronômetro
     function startCountdown() {
         console.log("Iniciando cronômetro...");
-        const targetDate = new Date('August 26, 2025 23:59:59').getTime(); // Altere esta data
+        const targetDate = new Date('August 28, 2025 23:59:59').getTime(); // Altere esta data
         const updateCountdown = setInterval(function () {
             const now = new Date().getTime();
             tempoRestante = targetDate - now;
